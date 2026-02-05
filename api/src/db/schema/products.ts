@@ -3,7 +3,8 @@ import { users } from "./user.ts";
 
 export const products = pgTable('products', {
     id: text().primaryKey(),
-    user_id: text().notNull().references(() => users.id),
+    createdBy: text().notNull().references(() => users.id),
+    updatedBy: text().notNull().references(() => users.id),
     name: text().notNull(),
     value: integer().notNull(),
     createdAt: timestamp().defaultNow().notNull(),

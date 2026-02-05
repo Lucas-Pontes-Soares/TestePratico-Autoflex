@@ -8,6 +8,13 @@
       "when": 1770298857023,
       "tag": "0000_abandoned_bug",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1770308688274,
+      "tag": "0001_worried_doorman",
+      "breakpoints": true
     }
   ]
 }
