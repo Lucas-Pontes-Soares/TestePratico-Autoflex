@@ -6,4 +6,7 @@ export const userSchema = z.object({
     password: z.string().min(6, 'Password must be at least 6 characters long'),
 });
 
+export const userSchemaUpdate = userSchema.partial();
+
 export type UserSchema = z.infer<typeof userSchema>;
+export type UserSchemaUpdate = z.infer<typeof userSchemaUpdate>;
