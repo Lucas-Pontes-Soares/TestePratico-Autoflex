@@ -1,5 +1,5 @@
 import { pgTable, text, integer, timestamp } from "drizzle-orm/pg-core";
-import { users } from "./user.ts";
+import { users } from "./users.ts";
 
 export const products = pgTable('products', {
     id: text().primaryKey(),

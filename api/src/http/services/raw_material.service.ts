@@ -1,5 +1,4 @@
 import { randomUUID } from "node:crypto";
-import type { UUID } from "node:crypto";
 import { db } from "../../db/client.ts";
 import { schema } from "../../db/schema/index.ts";
 import type { RawMaterialSchema, RawMaterialSchemaUpdate } from "../schemas/raw_material.schema.ts";
@@ -18,7 +17,7 @@ export async function create(data: RawMaterialSchema) {
     return newRawMaterial;
 };
 
-export async function get(raw_material_id: UUID) {
+export async function get(raw_material_id: string) {
     const rawMaterial = await db.select().from(schema.raw_materials)
     .where(eq(schema.raw_materials.id, raw_material_id));
   
@@ -31,7 +30,7 @@ export async function getAll() {
     return rawMaterials;
 };
 
-export async function remove(raw_material_id: UUID) {
+export async function remove(raw_material_id: string) {
     const rawMaterial = await db.delete(schema.raw_materials)
     .where(eq(schema.raw_materials.id, raw_material_id))
     .returning();
@@ -39,7 +38,7 @@ export async function remove(raw_material_id: UUID) {
     return rawMaterial;
 };
 
-export async function update(raw_material_id: UUID, data: RawMaterialSchemaUpdate) {
+export async function update(raw_material_id: string, data: RawMaterialSchemaUpdate) {
     const rawMaterial = await db.update(schema.raw_materials).set({ 
         name: data.name || undefined, 
         stock_quantity: data.stock_quantity || undefined, 

@@ -1,5 +1,4 @@
 import { randomUUID } from "node:crypto";
-import type { UUID } from "node:crypto";
 import { db } from "../../db/client.ts";
 import { schema } from "../../db/schema/index.ts";
 import type { ProductSchema, ProductSchemaUpdate } from "../schemas/product.schema.ts";
@@ -18,7 +17,7 @@ export async function create(data: ProductSchema) {
     return newProduct;
 };
 
-export async function get(product_id: UUID) {
+export async function get(product_id: string) {
     const product = await db.select().from(schema.products)
     .where(eq(schema.products.id, product_id));
   
@@ -31,7 +30,7 @@ export async function getAll() {
     return products;
 };
 
-export async function remove(product_id: UUID) {
+export async function remove(product_id: string) {
     const product = await db.delete(schema.products)
     .where(eq(schema.products.id, product_id))
     .returning();
@@ -39,7 +38,7 @@ export async function remove(product_id: UUID) {
     return product;
 };
 
-export async function update(product_id: UUID, data: ProductSchemaUpdate) {
+export async function update(product_id: string, data: ProductSchemaUpdate) {
     const product = await db.update(schema.products).set({ 
         name: data.name || undefined, 
         value: data.value || undefined, 

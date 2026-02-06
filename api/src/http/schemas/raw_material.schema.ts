@@ -7,7 +7,9 @@ export const rawMaterialSchema = z.object({
     updated_by: z.string(),
 });
 
-export const rawMaterialSchemaUpdate = rawMaterialSchema.partial();
+export const rawMaterialSchemaUpdate = rawMaterialSchema.partial().extend({
+    updated_by: z.string().min(1, 'Updated by is required'),
+});
 
 export type RawMaterialSchema = z.infer<typeof rawMaterialSchema>;
 export type RawMaterialSchemaUpdate = z.infer<typeof rawMaterialSchemaUpdate>;

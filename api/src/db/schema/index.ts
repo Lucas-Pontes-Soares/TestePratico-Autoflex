@@ -1,7 +1,7 @@
 import { products } from "./products.ts";
 import { products_materials } from "./products_materials.ts";
 import { raw_materials } from "./raw_materials.ts";
-import { users } from "./user.ts";
+import { users } from "./users.ts";
 
 export const schema = {
     users,

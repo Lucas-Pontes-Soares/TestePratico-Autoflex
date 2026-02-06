@@ -1,5 +1,5 @@
 import { pgTable, text, integer, timestamp } from "drizzle-orm/pg-core";
-import { users } from "./user.ts";
+import { users } from "./users.ts";
 import { products } from "./products.ts";
 import { raw_materials } from "./raw_materials.ts";
 

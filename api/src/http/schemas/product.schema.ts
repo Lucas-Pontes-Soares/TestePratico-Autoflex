@@ -7,7 +7,9 @@ export const productSchema = z.object({
     updated_by: z.string(),
 });
 
-export const productSchemaUpdate = productSchema.partial();
+export const productSchemaUpdate = productSchema.partial().extend({
+    updated_by: z.string().min(1, 'Updated by is required'),
+});
 
 export type ProductSchema = z.infer<typeof productSchema>;
 export type ProductSchemaUpdate = z.infer<typeof productSchemaUpdate>;

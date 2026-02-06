@@ -8,7 +8,9 @@ export const productMaterialSchema = z.object({
     updated_by: z.string(),
 });
 
-export const productMaterialSchemaUpdate = productMaterialSchema.partial();
+export const productMaterialSchemaUpdate = productMaterialSchema.partial().extend({
+    updated_by: z.string().min(1, 'Updated by is required'),
+});
 
 export type ProductMaterialSchema = z.infer<typeof productMaterialSchema>;
 export type ProductMaterialSchemaUpdate = z.infer<typeof productMaterialSchemaUpdate>;
