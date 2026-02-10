@@ -28,6 +28,14 @@ export async function get(products_materials_id: string) {
     return productMaterial;
 };
 
+export async function getByProductId(product_id: string) {
+    const productMaterial = await db.select().from(schema.products_materials)
+    .where(eq(schema.products_materials.product_id, product_id));
+  
+    return productMaterial;
+};
+
+
 export async function getAll() {
     const productsMaterials = await db.select().from(schema.products_materials);
   
