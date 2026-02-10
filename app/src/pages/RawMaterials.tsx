@@ -183,7 +183,7 @@ export default function RawMaterials() {
         </header>
 
         <div className="flex flex-1 flex-col gap-4 p-6">
-          <div className="flex items-end justify-between mb-4">
+          <div className="flex flex-col md:flex-row items-start md:items-end justify-between mb-4 gap-y-4">
             <div className="flex flex-col gap-1">
               <h1 className="text-2xl font-bold tracking-tight text-foreground">
                 Estoque de Matérias Primas
@@ -193,17 +193,17 @@ export default function RawMaterials() {
               </span>
             </div>
 
-            <div className="flex items-center gap-3">
+            <div className="flex flex-col-reverse md:flex-row items-end md:items-center gap-3 w-full md:w-auto">
               <Button 
                 onClick={fetchMaterials} 
                 variant="outline"
-                className="cursor-pointer"
+                className="cursor-pointer w-full md:w-auto"
               >
                 <RefreshCcw className="mr-2 size-4" />
                 Atualizar Lista
               </Button>
                 
-              <Button onClick={() => setIsCreateOpen(true)} className="bg-green-600 text-white hover:bg-green-500 cursor-pointer">
+              <Button onClick={() => setIsCreateOpen(true)} className="bg-green-600 text-white hover:bg-green-500 cursor-pointer w-full md:w-auto">
                 <Plus className="mr-2 size-4" />
                 Criar
               </Button>

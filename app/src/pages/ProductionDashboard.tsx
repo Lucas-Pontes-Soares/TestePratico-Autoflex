@@ -81,7 +81,7 @@ export default function ProductionDashboard() {
         </header>
 
         <div className="flex flex-1 flex-col gap-4 p-6">
-          <div className="flex items-end justify-between mb-4">
+          <div className="flex flex-col md:flex-row items-start md:items-end justify-between mb-4 gap-y-4">
             <div className="flex flex-col gap-1">
               <h1 className="text-2xl font-bold tracking-tight text-foreground">
                 Dashboard de Produção
@@ -91,11 +91,11 @@ export default function ProductionDashboard() {
               </span>
             </div>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 w-full md:w-auto">
               <Button
                 onClick={fetchProductionSuggestion}
                 variant="outline"
-                className="cursor-pointer"
+                className="cursor-pointer w-full md:w-auto"
                 disabled={loading}
               >
                 <RefreshCcw className="mr-2 size-4" />
@@ -111,7 +111,7 @@ export default function ProductionDashboard() {
           ) : (
             productionData && (
               <>
-                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+                <div className="grid gap-4 grid-cols-1 sm:grid-cols-2">
                   <Card>
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                       <CardTitle className="text-sm font-medium">
