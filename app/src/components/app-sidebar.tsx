@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { useEffect, useState } from "react" // Added useEffect, useState
 import {
   AudioWaveform,
   BookOpen,
@@ -14,6 +15,7 @@ import {
   Settings2,
   SquareTerminal,
   Stone,
+  User, // Added User icon for default avatar
 } from "lucide-react"
 
 import { NavMain } from "@/components/nav-main"
@@ -26,14 +28,19 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar"
-import { useLocation } from "react-router"
+import { useLocation, useNavigate } from "react-router-dom"
+import { getLoggedUserId } from "@/lib/userLogged"
+import { api } from "@/lib/axios" 
+import { toast } from "sonner"
+import { Spinner } from "./ui/spinner"
+
+interface UserProfile {
+  id: string;
+  name: string;
+  email: string;
+}
 
 const data = {
-  user: {
-    name: "lucas",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
   teams: [
     {
       name: "AutoFlex",
@@ -61,6 +68,63 @@ const data = {
 }
 
 export function AppSidebar({ ...props}: React.ComponentProps<typeof Sidebar>) {
+  const [currentUser, setCurrentUser] = useState<UserProfile | null>(null);
+  const [loadingUser, setLoadingUser] = useState(true);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    async function fetchUserData() {
+      const userId = getLoggedUserId();
+      if (!userId) {
+        navigate("/login");
+        setLoadingUser(false);
+        return;
+      }
+
+      try {
+        setLoadingUser(true);
+        const response = await api.get(`/user/${userId}`);
+        if (response.data.data && response.data.data.length > 0) {
+          setCurrentUser(response.data.data[0]);
+        } else {
+          toast.error("Dados do usuário não encontrados.");
+          navigate("/login");
+        }
+      } catch (error) {
+        toast.error("Erro ao carregar dados do usuário.");
+        console.error("Failed to fetch user data:", error);
+        navigate("/login");
+      } finally {
+        setLoadingUser(false);
+      }
+    }
+    fetchUserData();
+  }, [navigate]);
+
+  const userToDisplay = currentUser || {
+    name: "Usuário",
+    email: "carregando...",
+    avatar: "",
+  };
+
+  if (loadingUser) {
+    return (
+      <Sidebar collapsible="icon" {...props}>
+        <SidebarHeader>
+          <TeamSwitcher teams={data.teams} />
+        </SidebarHeader>
+        <SidebarContent>
+          <NavMain items={data.navMain} />
+        </SidebarContent>
+        <SidebarFooter>
+          <div className="flex items-center justify-center p-4">
+            <Spinner className="animate-spin text-muted-foreground" />
+          </div>
+        </SidebarFooter>
+        <SidebarRail />
+      </Sidebar>
+    );
+  }
 
   return (
     <Sidebar collapsible="icon" {...props}>
@@ -71,7 +135,7 @@ export function AppSidebar({ ...props}: React.ComponentProps<typeof Sidebar>) {
         <NavMain items={data.navMain} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser user={userToDisplay} />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

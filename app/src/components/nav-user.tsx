@@ -6,6 +6,7 @@ import {
   LogOut,
   Sparkles,
 } from "lucide-react"
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 import {
   Avatar,
@@ -34,10 +35,32 @@ export function NavUser({
   user: {
     name: string
     email: string
-    avatar: string
   }
 }) {
   const { isMobile } = useSidebar()
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("autoflex:auth");
+    navigate("/login");
+  };
+
+  const handleProfileClick = () => {
+    navigate("/profile");
+  };
+
+  const getInitials = (name: string) => {
+    if (!name) return "";
+    const nameParts = name.split(" ").filter(part => part.length > 0);
+    let initials = "";
+    if (nameParts.length > 0) {
+      initials += nameParts[0][0];
+      if (nameParts.length > 1) {
+        initials += nameParts[nameParts.length - 1][0];
+      }
+    }
+    return initials.toUpperCase();
+  };
 
   return (
     <SidebarMenu>
@@ -49,8 +72,7 @@ export function NavUser({
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               <Avatar className="h-8 w-8 rounded-lg">
-                <AvatarImage src={user.avatar} alt={user.name} />
-                <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                <AvatarFallback className="rounded-lg">{getInitials(user.name)}</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-medium">{user.name}</span>
@@ -68,8 +90,7 @@ export function NavUser({
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
-                  <AvatarImage src={user.avatar} alt={user.name} />
-                  <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                  <AvatarFallback className="rounded-lg">{getInitials(user.name)}</AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-medium">{user.name}</span>
@@ -79,13 +100,13 @@ export function NavUser({
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
+              <DropdownMenuItem onClick={handleProfileClick}>
                 <BadgeCheck />
                 Conta
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={handleLogout}>
               <LogOut />
               Sair
             </DropdownMenuItem>

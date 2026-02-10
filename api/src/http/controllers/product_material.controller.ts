@@ -101,10 +101,10 @@ export async function getProductsByDescValue(req: express.Request<any, any, any>
     const response = await productMaterialService.getProductionSuggestion()
     console.log(response);
 
-    return res.status(200).json({ message: 'Products materials found with success', data: response });
+    return res.status(200).json({ message: 'Suggestion of production generated with success', data: response });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ message: 'Error finding products materials' });
+    return res.status(500).json({ message: 'Error suggestion of production' });
   }
 }
 

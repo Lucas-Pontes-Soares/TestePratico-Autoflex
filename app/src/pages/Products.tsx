@@ -524,7 +524,7 @@ export default function Products() {
 
         {/* AlertDialog for create */}
         <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
-          <DialogContent className="sm:max-w-[425px]">
+          <DialogContent className="sm:max-w-[425px] px-2">
             <form onSubmit={handleCreate}>
               <DialogHeader>
                 <DialogTitle>Novo Produto</DialogTitle>
@@ -657,7 +657,7 @@ export default function Products() {
 
         {/* Dialog for edit */}
         <Dialog open={isEditOpen} onOpenChange={setIsEditOpen}>
-          <DialogContent className="sm:max-w-[425px]">
+          <DialogContent className="sm:max-w-[425px] px-2">
             <form onSubmit={handleUpdate}>
               <DialogHeader>
                 <DialogTitle>Editar Produto</DialogTitle>
