@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "node --experimental-strip-types --watch --no-warnings src/http/server.ts",
     "start": "node --experimental-strip-types --no-warnings src/http/server.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "vitest"
   },
   "keywords": [],
   "author": "",
@@ -34,6 +34,7 @@
     "nodemon": "^3.1.11",
     "ts-node": "^10.9.2",
     "tsx": "^4.21.0",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.18"
   }
 }

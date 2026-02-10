@@ -13,6 +13,18 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
+import { Trash2 } from "lucide-react";
+
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog"
 
 interface UserProfile {
   id: string;
@@ -34,6 +46,9 @@ export default function Profile() {
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
   const [isUpdatingPassword, setIsUpdatingPassword] = useState(false);
+
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [isDeletingAccount, setIsDeletingAccount] = useState(false);
 
 
   async function fetchUserProfile() {
@@ -133,6 +148,25 @@ export default function Profile() {
       console.error("Failed to update password:", error);
     } finally {
       setIsUpdatingPassword(false);
+    }
+  }
+
+  async function handleDeleteAccount() {
+    if (!userProfile) return;
+
+    setIsDeletingAccount(true);
+    try {
+      await api.delete(`/user/${userProfile.id}`);
+      toast.success("Conta excluída com sucesso!");
+      localStorage.removeItem('user_id');
+      localStorage.removeItem('token'); 
+      navigate("/login");
+    } catch (error: any) {
+      toast.error(error.response?.data?.message || "Erro ao excluir a conta.");
+      console.error("Failed to delete account:", error);
+    } finally {
+      setIsDeletingAccount(false);
+      setIsDeleteDialogOpen(false);
     }
   }
 
@@ -260,6 +294,15 @@ export default function Profile() {
                     {isUpdatingProfile ? <Spinner/> : null}
                     {isUpdatingProfile ? "Atualizando..." : "Atualizar Perfil"}
                   </Button>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="w-full mt-2 bg-red-600 text-white hover:bg-red-700"
+                    onClick={() => setIsDeleteDialogOpen(true)}
+                  >
+                    <Trash2 className="mr-2 h-4 w-4" />
+                    Excluir Conta
+                  </Button>
                 </form>
               </CardContent>
             </Card>
@@ -310,6 +353,30 @@ export default function Profile() {
           </div>
         </div>
       </SidebarInset>
+
+      {/* AlertDialog for Delete Account */}
+      <AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Deseja realmente excluir sua conta?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Você tem certeza que deseja excluir sua conta? Esta ação não pode ser desfeita. Todos os seus dados serão permanentemente removidos.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={() => setIsDeleteDialogOpen(false)} disabled={isDeletingAccount}>
+              Cancelar
+            </AlertDialogCancel>
+            <AlertDialogAction 
+              onClick={handleDeleteAccount}
+              className="bg-red-600 hover:bg-red-700 text-white"
+              disabled={isDeletingAccount}
+            >
+              Excluir
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </SidebarProvider>
   )
 }

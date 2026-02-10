@@ -15,7 +15,7 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar"
-import { Link, useLocation } from "react-router"
+import { Link, useLocation } from "react-router-dom"
 
 export function NavMain({
   items,
