@@ -15,7 +15,7 @@ import {
   Settings2,
   SquareTerminal,
   Stone,
-  User, // Added User icon for default avatar
+  User, 
 } from "lucide-react"
 
 import { NavMain } from "@/components/nav-main"
@@ -33,6 +33,7 @@ import { getLoggedUserId } from "@/lib/userLogged"
 import { api } from "@/lib/axios" 
 import { toast } from "sonner"
 import { Spinner } from "./ui/spinner"
+import { ModeToggle } from "./mode-toogle"
 
 interface UserProfile {
   id: string;
@@ -117,7 +118,8 @@ export function AppSidebar({ ...props}: React.ComponentProps<typeof Sidebar>) {
           <NavMain items={data.navMain} />
         </SidebarContent>
         <SidebarFooter>
-          <div className="flex items-center justify-center p-4">
+          <div className="flex flex-col items-center p-4 gap-2">
+            <ModeToggle />
             <Spinner className="animate-spin text-muted-foreground" />
           </div>
         </SidebarFooter>
@@ -135,7 +137,10 @@ export function AppSidebar({ ...props}: React.ComponentProps<typeof Sidebar>) {
         <NavMain items={data.navMain} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={userToDisplay} />
+        <div className="flex flex-col items-center p-4 gap-2">
+          <ModeToggle />
+          <NavUser user={userToDisplay} />
+        </div>
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

@@ -1,6 +1,7 @@
 import { Box } from "lucide-react"
 
 import { SignupForm } from "@/components/ui/signup-form" 
+import { ModeToggle } from "@/components/mode-toogle"
 
 export default function Register() {
   return (
@@ -12,6 +13,9 @@ export default function Register() {
           </div>
           AutoFlex
         </p>
+        <div className="w-34 mx-auto">
+          <ModeToggle />
+        </div>
         <SignupForm />
       </div>
     </div>

@@ -11,6 +11,8 @@
     "types": ["cypress", "node"],
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
   }
 }
