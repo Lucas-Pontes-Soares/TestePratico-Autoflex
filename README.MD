@@ -7,15 +7,15 @@
 - [✨ Principais Implementações](#principais-implementações)
     - [💻 Tecnologias Utilizadas](#tecnologias-utilizadas)
     - [📂 Estrutura](#estrutura)
-    - [🌳 GitFlow](#git-flow)
-    - [⚙️ Back-end](#back-end)
-        - [📁 Estrutura Back-end](#estrutura-back-end)
-        - [🖼️ Imagens Back-end](#imagens-backend)
-        - [✅ Testes Back-end](#testes-back-end)
-    - [🖥️ Front-end](#front-end)
-        - [📁 Estrutura Front-end](#estrutura-front-end)
-        - [🖼️ Imagens Front-end](#imagens-frontend)
-        - [✅ Testes Front-end](#testes-front-end)
+    - [🌳 GitFlow](#gitflow)
+- [⚙️ Back-end](#back-end)
+    - [📁 Estrutura Back-end](#estrutura-back-end)
+    - [🖼️ Imagens Back-end](#imagens-backend)
+    - [✅ Testes Back-end](#testes-back-end)
+- [🖥️ Front-end](#front-end)
+    - [📁 Estrutura Front-end](#estrutura-front-end)
+    - [🖼️ Imagens Front-end](#imagens-frontend)
+    - [✅ Testes Front-end](#testes-front-end)
 - [🚀 Como Rodar](#como-rodar)
 
 ## 🪪 Sobre Mim
@@ -68,13 +68,13 @@ TestePratico-Autoflex/
 └── feature/frontend/                 # Implementar codigo frontend
 ```
 
-![Branches](./images-readme/branches-print.png.png)
+![Branches](./images-readme/branches-print.png)
 
 Eu desenvolvi nas branchs features, separadas para cada parte.
 Quando terminei de desenvolver eu subi para a release.
 Ao final depois de testar e validar, eu subo para a main (produção).
 
-### ⚙️ Back-end
+## ⚙️ Back-end
 
 🔒 Implementação de criptografia de senha de usuários com bcrypt;
 
@@ -92,13 +92,13 @@ Ao final depois de testar e validar, eu subo para a main (produção).
 
 🔨 Implementei testes unitarios no backend com vitest.
 
-#### 🖼️ Imagens Backend
+### 🖼️ Imagens Backend
 
 ![Print do Insomnia](./images-readme/insomnia-print.png)
 
 ![Diagrama do Banco de Dados](./images-readme/db-diagram.png)
 
-#### 📁 Estrutura Back-end
+### 📁 Estrutura Back-end
 
 ```
 api/
@@ -119,7 +119,7 @@ api/
 └── .env.example # Codigo para copiar para o .env real                
 ```
 
-#### ✅ Testes Back-end
+### ✅ Testes Back-end
 
 Realizei testes unitarios no backend, utilizando o **vitest**.
 
@@ -134,7 +134,7 @@ Fiz testes dos CRUDS de cada parte. Separando em diferentes arquivos.
 
 ![Teste Backend](./images-readme/unit-test-backend.png)
 
-### 🖥️ Front-end
+## 🖥️ Front-end
 
 👤 Criei telas de login e cadastro;
 
@@ -148,7 +148,7 @@ Fiz testes dos CRUDS de cada parte. Separando em diferentes arquivos.
 
 🔨 Implementei testes de integração no frontend com cypress.
 
-#### 🖼️ Imagens Frontend
+### 🖼️ Imagens Frontend
 
 ![Pagina de Registro](./images-readme/register-page.png)
 
@@ -162,7 +162,7 @@ Fiz testes dos CRUDS de cada parte. Separando em diferentes arquivos.
 
 ![Pagina de Perfil](./images-readme/profile-page.png)
 
-#### 📁 Estrutura Front-end
+### 📁 Estrutura Front-end
 
 ```
 app/
@@ -179,7 +179,7 @@ app/
 └── .env.example # Codigo para copiar para o .env real                
 ```
 
-#### ✅ Testes Front-end
+### ✅ Testes Front-end
 
 Realizei testes de integração no front, utilizando o **cypress**.
 
@@ -220,8 +220,6 @@ A API fica disponível em http://localhost:3000
 O sistema fica disponível em http://localhost/login
 
 - Acessando:
-
-Acesse:
 
 http://localhost/register
 
