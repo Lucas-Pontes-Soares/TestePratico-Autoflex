@@ -28,6 +28,14 @@ export async function get(products_materials_id: string) {
     return productMaterial;
 };
 
+export async function getByProductId(product_id: string) {
+    const productMaterial = await db.select().from(schema.products_materials)
+    .where(eq(schema.products_materials.product_id, product_id));
+  
+    return productMaterial;
+};
+
+
 export async function getAll() {
     const productsMaterials = await db.select().from(schema.products_materials);
   
@@ -42,6 +50,10 @@ export async function getProductionSuggestion() {
 
     // find all stocks
     const materialsStock = await db.select().from(schema.raw_materials);
+
+    // Fetch all product_materials once
+    const allRawMaterials = await db.select().from(schema.raw_materials); 
+    const allProductMaterials = await db.select().from(schema.products_materials);
 
     // manipulate stock in memory
     const virtualStock = new Map(
@@ -60,8 +72,7 @@ export async function getProductionSuggestion() {
             //console.log("product")
 
             // find raw material used in this product
-            const products_materials = await db.select().from(schema.products_materials)
-            .where(eq(schema.products_materials.product_id, product.id));
+            const products_materials = allProductMaterials.filter(pm => pm.product_id === product.id);
 
             let hasMaterialToBuild;
             let countEachSufficientMaterial = 0;
@@ -118,7 +129,6 @@ export async function getProductionSuggestion() {
     let totalItemsProduced = 0;
 
     // format the response
-
     const items = Array.from(productsBuild.entries()).map(([productId, quantity]) => {
         // find product to get value
         const productInfo = productsByDescValue.find(p => p.id === productId)!;
@@ -127,11 +137,24 @@ export async function getProductionSuggestion() {
         totalValueGenerated += totalProductValue;
         totalItemsProduced += quantity;
 
+        // Fetch and format associated materials for this product
+        const associatedMaterials = allProductMaterials
+            .filter(pm => pm.product_id === productId)
+            .map(pm => {
+                const rawMaterial = allRawMaterials.find(rm => rm.id === pm.raw_material_id);
+                return {
+                    id: pm.raw_material_id,
+                    name: rawMaterial ? rawMaterial.name : 'Unknown Material',
+                    required_quantity: pm.required_quantity,
+                };
+            });
+
         return {
             productName: productInfo.name,
             quantityProduced: quantity,
             unitValue: Number(productInfo.value),
-            totalValue: totalProductValue
+            totalValue: totalProductValue,
+            materials: associatedMaterials,
         };
     });
 

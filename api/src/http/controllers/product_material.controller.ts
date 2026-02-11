@@ -62,6 +62,28 @@ export async function get(req: express.Request<any, any, any>, res: express.Resp
   }
 };
 
+export async function getByProductId(req: express.Request<any, any, any>, res: express.Response) {
+  try {
+    const product_id = req.params.id;
+
+    if (!product_id) {
+      return res.status(400).json({ errors: 'Product ID is required' });
+    }
+
+    const response = await productMaterialService.getByProductId(product_id)
+    console.log(response);
+
+    if(response.length <= 0) {
+      return res.status(404).json({ message: 'Product material not found'});
+    }
+
+    return res.status(200).json({ message: 'Product material found with success', data: response });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Error finding product material' });
+  }
+}
+
 export async function getAll(req: express.Request<any, any, any>, res: express.Response) {
   try {
     const response = await productMaterialService.getAll()
@@ -79,10 +101,10 @@ export async function getProductsByDescValue(req: express.Request<any, any, any>
     const response = await productMaterialService.getProductionSuggestion()
     console.log(response);
 
-    return res.status(200).json({ message: 'Products materials found with success', data: response });
+    return res.status(200).json({ message: 'Suggestion of production generated with success', data: response });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ message: 'Error finding products materials' });
+    return res.status(500).json({ message: 'Error suggestion of production' });
   }
 }
 
